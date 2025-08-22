@@ -1,0 +1,26 @@
+[
+  {
+    "ip": "192.168.1.1",
+    "hostname": "sax1v1k.lan",
+    "status": "up",
+    "discovered_at": "2025-08-21T17:51:37.552816"
+  },
+  {
+    "ip": "192.168.1.164",
+    "hostname": "iphone.lan",
+    "status": "up",
+    "discovered_at": "2025-08-21T17:51:46.046042"
+  },
+  {
+    "ip": "192.168.1.237",
+    "hostname": "caseys-mbp.lan",
+    "status": "up",
+    "discovered_at": "2025-08-21T17:51:48.109507"
+  },
+  {
+    "ip": "192.168.1.206",
+    "hostname": "iphone-71.lan",
+    "status": "up",
+    "discovered_at": "2025-08-21T17:51:48.452351"
+  }
+]

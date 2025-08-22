@@ -165,6 +165,13 @@ def show_landing_page():
     """Display the main landing page"""
     st.markdown('<h1 class="main-header">🛡️ XKRed27 Security Suite</h1>', unsafe_allow_html=True)
     
+    # Show tool availability status
+    available_tools = len([tool for tool in tool_modules.keys() if tool != "home"])
+    if available_tools < 6:  # 6 tools excluding home
+        st.warning(f"⚠️ **Tool Status**: {available_tools}/6 security tools are currently available")
+        st.info("💡 **Some tools failed to load**. Check the sidebar for detailed status and troubleshooting information.")
+        st.markdown("---")
+    
     # Hero section with modern styling
     st.markdown('<h2 class="gradient-text" style="font-size: 2.5rem; margin-bottom: 1rem;">🚀 Professional Network Security Tools</h2>', unsafe_allow_html=True)
     
@@ -416,8 +423,67 @@ def show_landing_page():
     Ensure you have proper authorization before testing any network or system.
     """)
 
-# Import tool modules
-from tools import network_scanner, nmap_scanner, medusa_brute, nikto_scanner, hydra_scanner, gobuster_scanner, anon_surfer
+# Import tool modules with error handling
+tool_modules = {}
+
+def safe_import_tool(module_name, import_path):
+    """Safely import a tool module with error handling"""
+    try:
+        if module_name == "network_scanner":
+            from tools import network_scanner
+            tool_modules[module_name] = network_scanner
+        elif module_name == "nmap_scanner":
+            from tools import nmap_scanner
+            tool_modules[module_name] = nmap_scanner
+        elif module_name == "medusa_brute":
+            from tools import medusa_brute
+            tool_modules[module_name] = medusa_brute
+        elif module_name == "nikto_scanner":
+            from tools import nikto_scanner
+            tool_modules[module_name] = nikto_scanner
+        elif module_name == "hydra_scanner":
+            from tools import hydra_scanner
+            tool_modules[module_name] = hydra_scanner
+        elif module_name == "gobuster_scanner":
+            from tools import gobuster_scanner
+            tool_modules[module_name] = gobuster_scanner
+        elif module_name == "anon_surfer":
+            from tools import anon_surfer
+            tool_modules[module_name] = anon_surfer
+        return True
+    except ImportError as e:
+        st.error(f"⚠️ Failed to import {module_name}: {str(e)}")
+        st.info(f"💡 This tool may not be available. Check your installation.")
+        return False
+    except Exception as e:
+        st.error(f"❌ Error importing {module_name}: {str(e)}")
+        return False
+
+# Initialize tool modules
+def initialize_tools():
+    """Initialize all available tool modules"""
+    tools_to_import = [
+        "network_scanner",
+        "nmap_scanner", 
+        "medusa_brute",
+        "nikto_scanner",
+        "hydra_scanner",
+        "gobuster_scanner",
+        "anon_surfer"
+    ]
+    
+    successful_imports = 0
+    for tool in tools_to_import:
+        if safe_import_tool(tool, f"tools.{tool}"):
+            successful_imports += 1
+    
+    if successful_imports == 0:
+        st.error("❌ No security tools could be imported. Please check your installation.")
+        st.stop()
+    elif successful_imports < len(tools_to_import):
+        st.warning(f"⚠️ Only {successful_imports}/{len(tools_to_import)} tools loaded successfully.")
+    
+    return successful_imports
 
 def show_navigation_sidebar():
     """Show consistent navigation sidebar for all pages with clickable navigation"""
@@ -432,16 +498,25 @@ def show_navigation_sidebar():
     st.sidebar.markdown("---")
     
     # Show current active tool with modern badge
-    current_tool = {
-        "home": "🏠 Home",
-        "network": "🌐 Network Discovery", 
-        "nmap": "🔍 Nmap Scanner",
-        "medusa": "🔓 Medusa Brute Force",
-        "nikto": "🔍 Nikto Web Scanner",
-        "hydra": "🔒 Hydra Multi-Protocol",
-        "gobuster": "🔍 Gobuster Directory Scanner",
-        "anonsurf": "🕵️ AnonSurf Network Anonymizer"
-    }.get(st.session_state.active_tab, "🏠 Home")
+    current_tool_map = {"home": "🏠 Home"}
+    
+    # Add available tools to the map
+    if "network_scanner" in tool_modules:
+        current_tool_map["network"] = "🌐 Network Discovery"
+    if "nmap_scanner" in tool_modules:
+        current_tool_map["nmap"] = "🔍 Nmap Scanner"
+    if "medusa_brute" in tool_modules:
+        current_tool_map["medusa"] = "🔓 Medusa Brute Force"
+    if "nikto_scanner" in tool_modules:
+        current_tool_map["nikto"] = "🔍 Nikto Web Scanner"
+    if "hydra_scanner" in tool_modules:
+        current_tool_map["hydra"] = "🔒 Hydra Multi-Protocol"
+    if "gobuster_scanner" in tool_modules:
+        current_tool_map["gobuster"] = "🔍 Gobuster Directory Scanner"
+    if "anon_surfer" in tool_modules:
+        current_tool_map["anonsurf"] = "🕵️ AnonSurf Network Anonymizer"
+    
+    current_tool = current_tool_map.get(st.session_state.active_tab, "🏠 Home")
     
     st.sidebar.markdown(f"""
     <div style="padding: 0.75rem; background: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 1.5rem;">
@@ -450,17 +525,24 @@ def show_navigation_sidebar():
     </div>
     """, unsafe_allow_html=True)
     
-    # Navigation buttons with modern styling
-    nav_items = [
-        ("🏠", "Home", "home"),
-        ("🌐", "Network Discovery", "network"),
-        ("🔍", "Nmap Scanner", "nmap"),
-        ("🔓", "Medusa Brute Force", "medusa"),
-        ("🔍", "Nikto Web Scanner", "nikto"),
-        ("🔒", "Hydra Multi-Protocol", "hydra"),
-        ("🔍", "Gobuster Directory Scanner", "gobuster"),
-        ("🕵️", "AnonSurf Network Anonymizer", "anonsurf")
-    ]
+    # Navigation buttons with modern styling - only show available tools
+    nav_items = [("🏠", "Home", "home")]
+    
+    # Add available tools to navigation
+    if "network_scanner" in tool_modules:
+        nav_items.append(("🌐", "Network Discovery", "network"))
+    if "nmap_scanner" in tool_modules:
+        nav_items.append(("🔍", "Nmap Scanner", "nmap"))
+    if "medusa_brute" in tool_modules:
+        nav_items.append(("🔓", "Medusa Brute Force", "medusa"))
+    if "nikto_scanner" in tool_modules:
+        nav_items.append(("🔍", "Nikto Web Scanner", "nikto"))
+    if "hydra_scanner" in tool_modules:
+        nav_items.append(("🔒", "Hydra Multi-Protocol", "hydra"))
+    if "gobuster_scanner" in tool_modules:
+        nav_items.append(("🔍", "Gobuster Directory Scanner", "gobuster"))
+    if "anon_surfer" in tool_modules:
+        nav_items.append(("🕵️", "AnonSurf Network Anonymizer", "anonsurf"))
     
     for icon, label, tab in nav_items:
         is_active = st.session_state.active_tab == tab
@@ -489,6 +571,51 @@ def show_navigation_sidebar():
     
     st.sidebar.markdown("---")
     
+    # Tool status indicator
+    st.sidebar.markdown("---")
+    st.sidebar.markdown("### 🔧 Tool Status")
+    
+    tool_status = []
+    if "network_scanner" in tool_modules:
+        tool_status.append("✅ Network Discovery")
+    else:
+        tool_status.append("❌ Network Discovery")
+    
+    if "nmap_scanner" in tool_modules:
+        tool_status.append("✅ Nmap Scanner")
+    else:
+        tool_status.append("❌ Nmap Scanner")
+    
+    if "medusa_brute" in tool_modules:
+        tool_status.append("✅ Medusa Brute Force")
+    else:
+        tool_status.append("❌ Medusa Brute Force")
+    
+    if "nikto_scanner" in tool_modules:
+        tool_status.append("✅ Nikto Web Scanner")
+    else:
+        tool_status.append("❌ Nikto Web Scanner")
+    
+    if "hydra_scanner" in tool_modules:
+        tool_status.append("✅ Hydra Multi-Protocol")
+    else:
+        tool_status.append("❌ Hydra Multi-Protocol")
+    
+    if "gobuster_scanner" in tool_modules:
+        tool_status.append("✅ Gobuster Scanner")
+    else:
+        tool_status.append("❌ Gobuster Scanner")
+    
+    if "anon_surfer" in tool_modules:
+        tool_status.append("✅ AnonSurf")
+    else:
+        tool_status.append("❌ AnonSurf")
+    
+    for status in tool_status:
+        st.sidebar.markdown(f"**{status}**")
+    
+    st.sidebar.markdown("---")
+    
     # Help tip with modern styling
     st.sidebar.markdown("""
     <div style="padding: 1rem; background: #eff6ff; border-radius: 8px; border: 1px solid #dbeafe;">
@@ -498,6 +625,28 @@ def show_navigation_sidebar():
 
 def main():
     """Main application with conditional navigation"""
+    
+    # Initialize tool modules first
+    successful_imports = initialize_tools()
+    
+    # Show tool status at the top if there are issues
+    if successful_imports < 7:  # 7 total tools
+        st.warning(f"⚠️ **Tool Loading Status**: {successful_imports}/7 tools loaded successfully")
+        st.info("💡 **Troubleshooting**: Check that all required security tools are installed and accessible. See SETUP.md for installation instructions.")
+        
+        # Show which tools failed to load
+        failed_tools = []
+        expected_tools = ["network_scanner", "nmap_scanner", "medusa_brute", "nikto_scanner", "hydra_scanner", "gobuster_scanner", "anon_surfer"]
+        for tool in expected_tools:
+            if tool not in tool_modules:
+                failed_tools.append(tool)
+        
+        if failed_tools:
+            with st.expander("🔍 Failed Tool Details", expanded=False):
+                st.error("The following tools failed to load:")
+                for tool in failed_tools:
+                    st.markdown(f"- ❌ **{tool.replace('_', ' ').title()}**")
+                st.info("💡 **Solution**: Install missing tools or check for import errors in the tool modules.")
     
     # Initialize session state for active tab
     if 'active_tab' not in st.session_state:
@@ -510,19 +659,61 @@ def main():
     if st.session_state.active_tab == "home":
         show_landing_page()
     elif st.session_state.active_tab == "network":
-        network_scanner.network_scanner_app()
+        if "network_scanner" in tool_modules:
+            tool_modules["network_scanner"].network_scanner_app()
+        else:
+            st.error("❌ Network Scanner tool not available")
+            st.info("💡 This tool failed to load. Check the tool status in the sidebar for details.")
+            st.session_state.active_tab = "home"
+            show_landing_page()
     elif st.session_state.active_tab == "nmap":
-        nmap_scanner.show_nmap_interface()
+        if "nmap_scanner" in tool_modules:
+            tool_modules["nmap_scanner"].show_nmap_interface()
+        else:
+            st.error("❌ Nmap Scanner tool not available")
+            st.info("💡 This tool failed to load. Check the tool status in the sidebar for details.")
+            st.session_state.active_tab = "home"
+            show_landing_page()
     elif st.session_state.active_tab == "medusa":
-        medusa_brute.show_medusa_interface()
+        if "medusa_brute" in tool_modules:
+            tool_modules["medusa_brute"].show_medusa_interface()
+        else:
+            st.error("❌ Medusa Brute Force tool not available")
+            st.info("💡 This tool failed to load. Check the tool status in the sidebar for details.")
+            st.session_state.active_tab = "home"
+            show_landing_page()
     elif st.session_state.active_tab == "nikto":
-        nikto_scanner.show_nikto_interface()
+        if "nikto_scanner" in tool_modules:
+            tool_modules["nikto_scanner"].show_nikto_interface()
+        else:
+            st.error("❌ Nikto Web Scanner tool not available")
+            st.info("💡 This tool failed to load. Check the tool status in the sidebar for details.")
+            st.session_state.active_tab = "home"
+            show_landing_page()
     elif st.session_state.active_tab == "hydra":
-        hydra_scanner.show_hydra_interface()
+        if "hydra_scanner" in tool_modules:
+            tool_modules["hydra_scanner"].show_hydra_interface()
+        else:
+            st.error("❌ Hydra Multi-Protocol tool not available")
+            st.info("💡 This tool failed to load. Check the tool status in the sidebar for details.")
+            st.session_state.active_tab = "home"
+            show_landing_page()
     elif st.session_state.active_tab == "gobuster":
-        gobuster_scanner.show_gobuster_interface()
+        if "gobuster_scanner" in tool_modules:
+            tool_modules["gobuster_scanner"].show_gobuster_interface()
+        else:
+            st.error("❌ Gobuster Directory Scanner tool not available")
+            st.info("💡 This tool failed to load. Check the tool status in the sidebar for details.")
+            st.session_state.active_tab = "home"
+            show_landing_page()
     elif st.session_state.active_tab == "anonsurf":
-        anon_surfer.show_anon_surfer_interface()
+        if "anon_surfer" in tool_modules:
+            tool_modules["anon_surfer"].show_anon_surfer_interface()
+        else:
+            st.error("❌ AnonSurf Network Anonymizer tool not available")
+            st.info("💡 This tool failed to load. Check the tool status in the sidebar for details.")
+            st.session_state.active_tab = "home"
+            show_landing_page()
     else:
         # Fallback to home if invalid tab
         st.session_state.active_tab = "home"

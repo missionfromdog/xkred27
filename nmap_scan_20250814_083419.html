@@ -1,0 +1,107 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Nmap Scan Report</title>
+        <style>
+            body { font-family: Arial, sans-serif; margin: 40px; }
+            .header { background-color: #1e3a8a; color: white; padding: 20px; text-align: center; }
+            .summary { background-color: #f8fafc; padding: 15px; margin: 20px 0; border-left: 4px solid #3b82f6; }
+            .host { margin: 20px 0; padding: 15px; border: 1px solid #e2e8f0; }
+            .host-header { background-color: #3b82f6; color: white; padding: 10px; margin: -15px -15px 15px -15px; }
+            .port-table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+            .port-table th, .port-table td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+            .port-table th { background-color: #f2f2f2; }
+            .open { color: #16a34a; font-weight: bold; }
+            .closed { color: #dc2626; }
+            .filtered { color: #ea580c; }
+            .raw-output { background-color: #1f2937; color: #f9fafb; padding: 20px; font-family: monospace; white-space: pre-wrap; }
+        </style>
+    </head>
+    <body>
+        <div class="header">
+            <h1>🔍 Nmap Scan Report</h1>
+            <p>Generated on 2025-08-14 08:34:19</p>
+        </div>
+        
+        <div class="summary">
+            <h2>Scan Command</h2>
+            <code>nmap -A -p 1-65535 -T4 -A -sV -O -v -oN - 192.168.1.1</code>
+        </div>
+        
+        <div class="summary">
+            <h2>Summary</h2>
+            <p></p>
+            <p>Total hosts scanned: 1</p>
+        </div>
+    
+        <div class="host">
+            <div class="host-header">
+                <h3>Host: SAX1V1K.lan</h3>
+            </div>
+            <p><strong>Status:</strong> Host is up (0.0028s latency).</p>
+        
+            <h4>Open Ports:</h4>
+            <table class="port-table">
+                <tr><th>Port</th><th>State</th><th>Service</th></tr>
+            
+                <tr>
+                    <td>53/tcp</td>
+                    <td class="open">open</td>
+                    <td>domain</td>
+                </tr>
+                
+                <tr>
+                    <td>80/tcp</td>
+                    <td class="open">open</td>
+                    <td>http</td>
+                </tr>
+                
+                <tr>
+                    <td>443/tcp</td>
+                    <td class="open">open</td>
+                    <td>ssl/http</td>
+                </tr>
+                </table><p><strong>OS Info:</strong> |_  Supported Methods: OPTIONS GET HEAD POST</p></div>
+        <div class="summary">
+            <h2>Raw Nmap Output</h2>
+            <div class="raw-output"># Nmap 7.97 scan initiated Thu Aug 14 08:32:27 2025 as: nmap -sT -sV -p 1-65535 -T4 -A -sV -v -oN - 192.168.1.1
+Nmap scan report for SAX1V1K.lan (192.168.1.1)
+Host is up (0.0028s latency).
+Not shown: 64512 closed tcp ports (conn-refused), 1020 filtered tcp ports (no-response)
+PORT    STATE SERVICE  VERSION
+53/tcp  open  domain   Cloudflare public DNS
+80/tcp  open  http     lighttpd 1.4.59
+| http-methods: 
+|_  Supported Methods: GET HEAD POST OPTIONS
+|_http-title: Site doesn't have a title.
+|_http-server-header: lighttpd/1.4.59
+443/tcp open  ssl/http lighttpd 1.4.59
+| tls-alpn: 
+|   http/1.0
+|   http/1.1
+|_  h2
+|_ssl-date: TLS randomness does not represent time
+| http-methods: 
+|_  Supported Methods: OPTIONS GET HEAD POST
+|_http-title: Site doesn't have a title (text/html).
+| ssl-cert: Subject: commonName=askey.com/organizationName=ASKEY/stateOrProvinceName=TW/countryName=CN
+| Issuer: commonName=askey.com/organizationName=ASKEY/stateOrProvinceName=TW/countryName=CN
+| Public Key type: rsa
+| Public Key bits: 2048
+| Signature Algorithm: sha256WithRSAEncryption
+| Not valid before: 2025-08-11T06:16:10
+| Not valid after:  2028-08-10T06:16:10
+| MD5:     9044 0645 d504 6767 3fea 0905 9e2d d502
+| SHA-1:   7217 809e 085b c03e cdc9 0dae 996f 593f 21b6 9c0f
+|_SHA-256: 391f 31ab 053e c9dc 480f 950c 522a 6e0b f9a5 95cb 3591 29ca c254 de0a a4f9 8fe8
+|_http-server-header: lighttpd/1.4.59
+
+Read data files from: /opt/homebrew/bin/../share/nmap
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Thu Aug 14 08:34:19 2025 -- 1 IP address (1 host up) scanned in 111.26 seconds
+</div>
+        </div>
+    </body>
+    </html>
+    

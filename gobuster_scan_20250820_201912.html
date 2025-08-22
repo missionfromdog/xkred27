@@ -1,0 +1,120 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Gobuster Directory/File Brute-Force Report</title>
+        <style>
+            body { font-family: Arial, sans-serif; margin: 20px; }
+            .header { background-color: #2E86AB; color: white; padding: 20px; border-radius: 5px; }
+            .section { margin: 20px 0; padding: 15px; border-radius: 5px; }
+            .found { background-color: #e8f5e8; border-left: 4px solid #4caf50; }
+            .info { background-color: #e3f2fd; border-left: 4px solid #2196f3; }
+            .summary { background-color: #f1f8e9; border-left: 4px solid #4caf50; }
+            .warning { background-color: #fff3e0; border-left: 4px solid #ff9800; }
+            table { border-collapse: collapse; width: 100%; }
+            th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+            th { background-color: #f2f2f2; }
+            .command { background-color: #f5f5f5; padding: 10px; border-radius: 3px; font-family: monospace; }
+            .status-200 { color: #2e7d32; font-weight: bold; }
+            .status-300 { color: #f57c00; font-weight: bold; }
+            .status-400 { color: #d32f2f; font-weight: bold; }
+            .status-500 { color: #7b1fa2; font-weight: bold; }
+        </style>
+    </head>
+    <body>
+        <div class="header">
+            <h1>🔍 Gobuster Directory/File Brute-Force Report</h1>
+            <p>Generated on 2025-08-20 20:19:12</p>
+        </div>
+        
+        <div class="section summary">
+            <h2>📊 Scan Summary</h2>
+            <p><strong>Target:</strong> </p>
+            <p><strong>Scan Mode:</strong> DNS</p>
+            <p><strong>Wordlist Size:</strong> 0 entries</p>
+            <p><strong>Items Found:</strong> 0</p>
+            <p><strong>Requests/sec:</strong> N/A</p>
+            <p><strong>Total Time:</strong> N/A seconds</p>
+        </div>
+        
+        <div class="section">
+            <h2>⚙️ Command Used</h2>
+            <div class="command">gobuster dns --domain geeksforgeeks.org -w /tmp/gobuster_wordlist_uploaded.txt -t 65 --timeout 10s --wildcard -o results.txt</div>
+        </div>
+    
+        <div class="section info">
+            <h2>🔍 No Items Found</h2>
+            <p>No directories, files, or resources were discovered with the provided wordlist and configuration.</p>
+            <p><strong>Suggestions:</strong></p>
+            <ul>
+                <li>Try a different wordlist with more common directory/file names</li>
+                <li>Adjust the file extensions being tested</li>
+                <li>Check if the target URL is accessible</li>
+                <li>Verify the target is a web server</li>
+            </ul>
+        </div>
+        
+        <div class="section">
+            <h2>📄 Raw Gobuster Output</h2>
+            <pre style="background-color: #f5f5f5; padding: 10px; border-radius: 3px; overflow-x: auto;">===============================================================
+Gobuster v3.8
+by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
+===============================================================
+[+] Domain:            geeksforgeeks.org
+[+] Threads:           65
+[+] Wildcard forced:   true
+[+] Timeout:           10s
+[+] Wordlist:          /tmp/gobuster_wordlist_uploaded.txt
+===============================================================
+Starting gobuster in DNS enumeration mode
+===============================================================
+vpn.geeksforgeeks.org 14.194.1.66
+media.geeksforgeeks.org 2600:9000:2202:4c00:14:588b:4e80:93a1,2600:9000:2202:5e00:14:588b:4e80:93a1,2600:9000:2202:e000:14:588b:4e80:93a1,2600:9000:2202:de00:14:588b:4e80:93a1,2600:9000:2202:7e00:14:588b:4e80:93a1,2600:9000:2202:d600:14:588b:4e80:93a1,2600:9000:2202:6a00:14:588b:4e80:93a1,2600:9000:2202:4a00:14:588b:4e80:93a1,13.227.74.48,13.227.74.105,13.227.74.52,13.227.74.4
+support.geeksforgeeks.org 35.163.174.50
+www.geeksforgeeks.org 2600:9000:234c:9800:16:97f7:5900:93a1,2600:9000:234c:7a00:16:97f7:5900:93a1,2600:9000:234c:2e00:16:97f7:5900:93a1,2600:9000:234c:4800:16:97f7:5900:93a1,2600:9000:234c:a400:16:97f7:5900:93a1,2600:9000:234c:5400:16:97f7:5900:93a1,2600:9000:234c:4200:16:97f7:5900:93a1,2600:9000:234c:7600:16:97f7:5900:93a1,108.138.246.88,108.138.246.77,108.138.246.118,108.138.246.101
+app.geeksforgeeks.org 34.213.23.47
+news.geeksforgeeks.org 2600:9000:234c:b600:4:1171:1ac0:93a1,2600:9000:234c:aa00:4:1171:1ac0:93a1,2600:9000:234c:2200:4:1171:1ac0:93a1,2600:9000:234c:7e00:4:1171:1ac0:93a1,2600:9000:234c:2800:4:1171:1ac0:93a1,2600:9000:234c:1e00:4:1171:1ac0:93a1,2600:9000:234c:d000:4:1171:1ac0:93a1,2600:9000:234c:a000:4:1171:1ac0:93a1,108.138.246.71,108.138.246.86,108.138.246.6,108.138.246.42
+cdn.geeksforgeeks.org 44.241.181.174,44.240.189.136,44.240.24.147
+connect.geeksforgeeks.org 34.128.185.228
+qa.geeksforgeeks.org 34.213.23.47
+mailer.geeksforgeeks.org 54.69.115.205
+videos.geeksforgeeks.org 34.126.229.178
+helpdesk.geeksforgeeks.org 103.103.196.76
+auth.geeksforgeeks.org 34.213.23.47
+monitoring.geeksforgeeks.org 34.127.9.159
+origin.geeksforgeeks.org 44.241.181.174,44.240.189.136,44.240.24.147
+assets.geeksforgeeks.org 2600:9000:234b:e000:d:2619:1cc0:93a1,2600:9000:234b:bc00:d:2619:1cc0:93a1,2600:9000:234b:1000:d:2619:1cc0:93a1,2600:9000:234b:3e00:d:2619:1cc0:93a1,2600:9000:234b:3800:d:2619:1cc0:93a1,2600:9000:234b:7400:d:2619:1cc0:93a1,2600:9000:234b:fc00:d:2619:1cc0:93a1,2600:9000:234b:c600:d:2619:1cc0:93a1,108.139.10.76,108.139.10.121,108.139.10.114,108.139.10.96
+api.geeksforgeeks.org 34.213.23.47
+code.geeksforgeeks.org 34.213.23.47
+campus.geeksforgeeks.org 34.213.23.47
+premium.geeksforgeeks.org 34.213.23.47
+aa.geeksforgeeks.org 2600:9000:234b:3400:b:1d45:92c0:93a1,2600:9000:234b:d400:b:1d45:92c0:93a1,2600:9000:234b:cc00:b:1d45:92c0:93a1,2600:9000:234b:b600:b:1d45:92c0:93a1,2600:9000:234b:5400:b:1d45:92c0:93a1,2600:9000:234b:5c00:b:1d45:92c0:93a1,2600:9000:234b:4200:b:1d45:92c0:93a1,2600:9000:234b:7000:b:1d45:92c0:93a1,108.139.10.61,108.139.10.85,108.139.10.108,108.139.10.69
+script.geeksforgeeks.org 34.54.210.56
+quiz.geeksforgeeks.org 34.213.23.47
+courses.geeksforgeeks.org 34.213.23.47
+jenkins.geeksforgeeks.org 34.187.133.206
+request.geeksforgeeks.org 44.241.181.174,44.240.189.136,44.240.24.147
+ui.geeksforgeeks.org 54.68.123.65,35.164.202.217
+util.geeksforgeeks.org 34.213.23.47
+mailer2.geeksforgeeks.org 35.165.139.159
+discuss.geeksforgeeks.org 2600:9000:2146:4600:7:5855:3740:93a1,2600:9000:2146:7c00:7:5855:3740:93a1,2600:9000:2146:b800:7:5855:3740:93a1,2600:9000:2146:ac00:7:5855:3740:93a1,2600:9000:2146:9800:7:5855:3740:93a1,2600:9000:2146:2a00:7:5855:3740:93a1,2600:9000:2146:9600:7:5855:3740:93a1,2600:9000:2146:cc00:7:5855:3740:93a1,65.8.161.127,65.8.161.104,65.8.161.103,65.8.161.27
+adtest.geeksforgeeks.org 54.212.78.24
+els.geeksforgeeks.org 52.41.253.127
+contribute.geeksforgeeks.org 34.213.23.47
+practice.geeksforgeeks.org 2600:9000:2146:b600:9:c50c:c440:93a1,2600:9000:2146:1000:9:c50c:c440:93a1,2600:9000:2146:200:9:c50c:c440:93a1,2600:9000:2146:b400:9:c50c:c440:93a1,2600:9000:2146:ea00:9:c50c:c440:93a1,2600:9000:2146:ec00:9:c50c:c440:93a1,2600:9000:2146:7200:9:c50c:c440:93a1,2600:9000:2146:4000:9:c50c:c440:93a1,65.8.161.110,65.8.161.31,65.8.161.18,65.8.161.71
+elk.geeksforgeeks.org 34.54.230.110
+ptest.geeksforgeeks.org 44.229.254.163
+notifications.geeksforgeeks.org 54.70.133.178
+ide.geeksforgeeks.org 108.138.246.54,108.138.246.89,108.138.246.11,108.138.246.101
+===============================================================
+Finished
+===============================================================
+</pre>
+        </div>
+        
+        <div class="section">
+            <p><em>Report generated by XKRed27 Security Suite - Gobuster Scanner</em></p>
+        </div>
+    </body>
+    </html>
+    

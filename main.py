@@ -429,28 +429,65 @@ tool_modules = {}
 def safe_import_tool(module_name, import_path):
     """Safely import a tool module with error handling"""
     try:
-        if module_name == "network_scanner":
-            from tools import network_scanner
-            tool_modules[module_name] = network_scanner
-        elif module_name == "nmap_scanner":
-            from tools import nmap_scanner
-            tool_modules[module_name] = nmap_scanner
-        elif module_name == "medusa_brute":
-            from tools import medusa_brute
-            tool_modules[module_name] = medusa_brute
-        elif module_name == "nikto_scanner":
-            from tools import nikto_scanner
-            tool_modules[module_name] = nikto_scanner
-        elif module_name == "hydra_scanner":
-            from tools import hydra_scanner
-            tool_modules[module_name] = hydra_scanner
-        elif module_name == "gobuster_scanner":
-            from tools import gobuster_scanner
-            tool_modules[module_name] = gobuster_scanner
-        elif module_name == "anon_surfer":
-            from tools import anon_surfer
-            tool_modules[module_name] = anon_surfer
-        return True
+        # Try multiple import strategies
+        module = None
+        
+        # Strategy 1: Try direct import from tools package
+        try:
+            if module_name == "network_scanner":
+                from tools import network_scanner
+                module = network_scanner
+            elif module_name == "nmap_scanner":
+                from tools import nmap_scanner
+                module = nmap_scanner
+            elif module_name == "medusa_brute":
+                from tools import medusa_brute
+                module = medusa_brute
+            elif module_name == "nikto_scanner":
+                from tools import nikto_scanner
+                module = nikto_scanner
+            elif module_name == "hydra_scanner":
+                from tools import hydra_scanner
+                module = hydra_scanner
+            elif module_name == "gobuster_scanner":
+                from tools import gobuster_scanner
+                module = gobuster_scanner
+            elif module_name == "anon_surfer":
+                from tools import anon_surfer
+                module = anon_surfer
+        except ImportError:
+            pass
+        
+        # Strategy 2: Try importing from tools directory directly
+        if module is None:
+            try:
+                import importlib.util
+                spec = importlib.util.spec_from_file_location(
+                    module_name, 
+                    f"tools/{module_name}.py"
+                )
+                if spec and spec.loader:
+                    module = importlib.util.module_from_spec(spec)
+                    spec.loader.exec_module(module)
+            except Exception:
+                pass
+        
+        # Strategy 3: Try importing from current directory
+        if module is None:
+            try:
+                import sys
+                sys.path.insert(0, 'tools')
+                module = __import__(module_name)
+                sys.path.pop(0)
+            except Exception:
+                pass
+        
+        if module is not None:
+            tool_modules[module_name] = module
+            return True
+        else:
+            raise ImportError(f"All import strategies failed for {module_name}")
+            
     except ImportError as e:
         st.error(f"⚠️ Failed to import {module_name}: {str(e)}")
         st.info(f"💡 This tool may not be available. Check your installation.")
